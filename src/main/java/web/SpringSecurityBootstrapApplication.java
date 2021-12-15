@@ -39,15 +39,15 @@ public class SpringSecurityBootstrapApplication {
         user2.setLogin("user");
         user2.setPassword("101");
 
-        Role role1 = new Role("ROLE_ADMIN");
-        Role role2 = new Role("ROLE_USER");
+        Role role1 = new Role("ROLE_USER");
+        Role role2 = new Role("ROLE_ADMIN");
         Set<Role> setStartRoles = new HashSet<>();
         setStartRoles.add(role1);
         setStartRoles.add(role2);
         roleService.saveRole(setStartRoles);
         user1.setRoles(roleService.getAllRoles());
         userService.addUser(user1);
-        user2.setRoles(roleService.getAllRoles().stream().limit(1).collect(Collectors.toSet()));
+        user2.setRoles(setStartRoles.stream().filter(r -> r.getName() == "ROLE_USER").collect(Collectors.toSet()));
         userService.addUser(user2);
 
     }
